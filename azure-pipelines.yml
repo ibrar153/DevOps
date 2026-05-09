@@ -1,0 +1,17 @@
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- task: UsePythonVersion@0
+  inputs:
+    versionSpec: '3.12'
+  displayName: 'Install Python'
+
+- script: pip install flask
+  displayName: 'Install Dependencies'
+
+- script: python3 app.py
+  displayName: 'Run Application'
