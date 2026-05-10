@@ -1,20 +1,17 @@
-name: My First Workflow
+trigger:
+- main
 
-on:
-  workflow_dispatch:
+steps:
+- task: Docker@2
+  displayName: Build and Push to ACR
+  inputs:
+    command: buildAndPush
+    containerRegistry: 'Apka_ACR_Connection'
+    repository: 'codealpha-task1'
 
-jobs:
-  test:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Linux Commands
-        run: |
-          hostname
-          uname -a
-          free -h
-          df -h
-          uptime
+- task: AzureWebAppContainer@1
+  displayName: Deploy to Azure App Service
+  inputs:
+    azureSubscription: 'Apka_Subscription'
+    appName: 'Apka_App_Name'
+    imageName: 'apkaacr.azurecr.io/codealpha-task1:$(Build.BuildId)'
