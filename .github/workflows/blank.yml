@@ -1,8 +1,6 @@
 name: My First Workflow
 
 on:
-  push:
-    branches: [ "main" ]
   workflow_dispatch:
 
 jobs:
@@ -10,7 +8,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      - name: Print message
-        run: echo "Workflow is working!"
+      - name: Linux Commands
+        run: |
+          hostname
+          uname -a
+          free -h
+          df -h
+          uptime
